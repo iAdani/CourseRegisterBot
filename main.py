@@ -4,7 +4,7 @@ import time
 
 # Time settings
 sleepTime = 0.5
-waitTime = 20
+waitTime = 12
 
 # Setting the driver
 driver = webdriver.Chrome("chromedriver")
@@ -35,7 +35,9 @@ time.sleep(sleepTime)
 driver.find_element_by_id("tvMainn10").click()
 time.sleep(sleepTime)
 
-# Closing annoying window
+# Closing annoying windows
+driver.find_element_by_id("ContentPlaceHolder1_btnmdScheduleConflictLessonsClose").click()
+time.sleep(sleepTime)
 driver.find_element_by_id("ContentPlaceHolder1_btnCloseThresholdRemark").click()
 time.sleep(sleepTime)
 
@@ -62,11 +64,13 @@ driver.find_element_by_id("ContentPlaceHolder1_gvBalance_lblBalanceName_11").cli
 
 # Refreshing
 for i in range(1, 10000):
-    time.sleep(waitTime)
+    time.sleep(0.5)
     try:
         driver.find_element_by_id("ContentPlaceHolder1_gvLinkToLessons_btnLinkStudentToLesson_0").click()
+        driver.switch_to.alert.accept()
         break
     except NoSuchElementException:
+        time.sleep(waitTime)
         driver.refresh()
 
 # Closing the window
